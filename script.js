@@ -57,13 +57,24 @@ function filtrerParLieu(liste, lieu) {
 // 4. Mets à jour <p id="compteur"> : « 4 plantes à arroser sur 8 »
 //    (utilise compterAArroser, ne recompte pas ici)
 function afficherPlantes(liste) {
-
+    const listePlantes = document.querySelector("#liste");
+    listePlantes.innerHTML = "";
+    liste.forEach(plante => {
+        const pourUnePlante = document.createElement("li")
+        pourUnePlante.textContent = `${plante.emoji} ${plante.nom}`
+        listePlantes.appendChild(pourUnePlante)
+        if (plante.aArroser === true) {
+            pourUnePlante.classList.add("a-arroser")
+        }
+    })
+    const compteur = document.querySelector("#compteur")
+    compteur.textContent = `${compterAArroser(liste)} plantes à arroser`
 }
 
 
 // TODO 4 — Au chargement de la page, affiche toutes les plantes.
 
-
+afficherPlantes(plantes)
 
 // ---------- PARTIE 3 : les clics ----------
 
@@ -74,11 +85,38 @@ function afficherPlantes(liste) {
 // Au clic sur « Toutes » : toutes les plantes.
 // Les gestionnaires sont des fonctions fléchées : () => { ... }
 
+const btnToutes = document.querySelector("#btn-toutes")
+const btnInterieur = document.querySelector("#btn-interieur")
+const btnExterieur = document.querySelector("#btn-exterieur")
+
+btnToutes.addEventListener("click", () => {
+    afficherPlantes(plantes)
+    activerBouton(btnToutes);
+})
+
+btnInterieur.addEventListener("click", () => {
+    const plantesInterieur = plantes.filter(plante => plante.lieu === "intérieur");
+    afficherPlantes(plantesInterieur);
+    activerBouton(btnInterieur);
+})
+
+btnExterieur.addEventListener("click", () => {
+    const plantesExterieur = plantes.filter(plante => plante.lieu === "extérieur");
+    afficherPlantes(plantesExterieur);
+    activerBouton(btnExterieur);
+})
 
 
 // TODO 6 — Le bouton actif
 // Le bouton cliqué prend la classe "actif", les deux autres la perdent.
 
+function activerBouton(boutonActif) {
+    btnToutes.classList.remove("actif");
+    btnInterieur.classList.remove("actif");
+    btnExterieur.classList.remove("actif");
+
+    boutonActif.classList.add("actif");
+}
 
 
 // =====================================================
