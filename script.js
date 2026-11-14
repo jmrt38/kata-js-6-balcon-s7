@@ -12,12 +12,20 @@
 // TODO 1 — compterAArroser(liste)
 // Retourne le nombre de plantes de la liste dont aArroser vaut true.
 function compterAArroser(liste) {
-
+    let nbAarroser = 0;
+    
+    liste.forEach(plante => {
+        // On utilise "plante" (au singulier) pour l'élément en cours
+        if (plante.aArroser === true) {
+            nbAarroser++;
+        }
+    });
+    
+    return nbAarroser;
 }
 
 // Vérifie dans la console avant de passer à la suite :
 // console.log(compterAArroser(plantes)) // doit afficher 4
-
 
 // TODO 2 — filtrerParLieu(liste, lieu)
 // Retourne un NOUVEAU tableau avec seulement les plantes dont le lieu
